@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Dual Sync | Trinova</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        html, body { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif;
+            background: #0b0f1a; color: #ffffff; 
+            min-height: 100vh; display: flex; 
+            align-items: center; justify-content: center;
+            overflow-x: hidden; width: 100%;
+        }
+
+        /* YAHAN FIX KIYA HAI: Har element par border-box lagaya */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Glassmorphism Container */
+        .app-container {
+            width: 90%; max-width: 450px; 
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; padding: 30px 20px; /* Padding adjust ki */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* Modern Back Button (Icon) */
+        .back-btn {
+            position: absolute; left: 20px; top: 20px;
+            width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            text-decoration: none; transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .back-btn:hover { background: rgba(56, 189, 248, 0.1); border-color: #38bdf8; }
+        .back-btn svg { width: 20px; height: 20px; fill: #38bdf8; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 30px; margin-top: 40px; } /* Thoda niche khiskaya */
+        .header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 2px; }
+        .header h2 span { color: #38bdf8; }
+        .header p { font-size: 0.85rem; opacity: 0.6; margin-top: 5px; }
+
+        /* Form Elements */
+        .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .input-group label { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
+        
+        input, select {
+            padding: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3); color: #fff; outline: none; font-size: 1rem;
+            width: 100%; font-family: 'Poppins', sans-serif;
+        }
+        input:focus, select:focus { border-color: #38bdf8; }
+        
+        /* Select Dropdown specific styling */
+        select option { background: #0b0f1a; color: #fff; }
+
+        .btn {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            background: #38bdf8; color: #000; font-weight: 600; font-size: 1rem;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
+            font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
+        }
+        .btn:hover { background: #7dd3fc; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <a href="index.html" class="back-btn">
+            <svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg>
+        </a>
+
+        <div class="header">
+            <h2>DUAL <span>SYNC</span></h2>
+            <p>Configure your session</p>
+        </div>
+
+        <div id="setup-screen">
+            <div class="input-group">
+                <label>User Name</label>
+                <input type="text" id="user-name" placeholder="Enter your name">
+            </div>
+            
+            <div class="input-group">
+                <label>AI Entity Name</label>
+                <input type="text" id="ai-name" placeholder="Assign a name to the AI">
+            </div>
+
+            <div class="input-group">
+                <label>Select AI Model</label>
+                <select id="ai-model">
+                    <option value="gemini">Gemini 1.5 Flash</option>
+                    <option value="chatgpt">ChatGPT 4.0</option>
+                    <option value="groq">Groq (Ultra Fast)</option>
+                    <option value="openrouter">OpenRouter (Free)</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="initiateSync()">INITIATE</button>
+        </div>
+    </div>
+
+    <script>
+        function initiateSync() {
+            const uName = document.getElementById('user-name').value.trim();
+            const aName = document.getElementById('ai-name').value.trim();
+            const aModel = document.getElementById('ai-model').value;
+
+            if (!uName || !aName) {
+                alert("Both names are required to initiate sync.");
+                return;
+            }
+
+            // Save data to localStorage to use in chat1.html
+            localStorage.setItem('trinova_m1_user', uName);
+            localStorage.setItem('trinova_m1_ai', aName);
+            localStorage.setItem('trinova_m1_model', aModel);
+
+            // Redirect to chat screen
+            window.location.href = 'chat1.html';
+        }
+    </script>
+</body>
+</html>
